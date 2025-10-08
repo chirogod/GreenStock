@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GreenStock.Models
 {
-    internal class StoreModel
+    public class StoreModel
     {
         private int _Id;
         private string _Name;
