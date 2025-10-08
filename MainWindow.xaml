@@ -4,10 +4,81 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GreenStock"
+        xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" 
+        xmlns:viewmodels="clr-namespace:GreenStock.ViewModels"
         mc:Ignorable="d"
         Title="GreenStock"
-        WindowState="Maximized">
+        WindowState="Maximized"
+        Height="450" Width="800">
+
+    <Window.DataContext>
+        <viewmodels:MainWindowViewModel/>
+    </Window.DataContext>
+
+
     <Grid>
-        <TextBlock Text="holaaa"></TextBlock>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/> 
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Border Grid.Column="0" 
+                Background="{StaticResource SidebarBackground}" 
+                BorderBrush="#EEEEEE" 
+                BorderThickness="0, 0, 1, 0">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>    <RowDefinition Height="*"/>      <RowDefinition Height="Auto"/>    </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="15, 15, 15, 20">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="🌿" FontSize="24" Foreground="{StaticResource AccentColor}" VerticalAlignment="Center" Margin="0, 0, 8, 0"/>
+                        <StackPanel>
+                            <TextBlock Text="GreenStock" FontWeight="Bold" FontSize="18" Foreground="{StaticResource SidebarTextColor}"/>
+                            <TextBlock Text="Gestión Inteligente" FontSize="12" Foreground="{StaticResource InactiveTextColor}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Separator Margin="0, 15, 0, 0" Background="#EEEEEE" Height="1"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Orientation="Vertical">
+
+                    <Button Style="{StaticResource SidebarButtonStyle}"
+                            Command="{Binding NavigateToDashboardCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="House" Width="16" Height="16" Foreground="Green"/>
+                            <TextBlock Text="Dashboard"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource SidebarButtonStyle}"
+                            Command="{Binding NavigateToConfigCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="User" Width="16" Height="16" Foreground="Green"/>
+                            <TextBlock Text="Usuarios"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource SidebarButtonStyle}"
+                            Command="{Binding NavigateToConfigCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Icon="Gear" Width="16" Height="16" Foreground="Green"/>
+                            <TextBlock Text="Configuracion"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Grid.Row="2" Margin="15, 15, 15, 15">
+                    <TextBlock Text="Dietética San Martín" FontSize="12" Foreground="{StaticResource InactiveTextColor}"/>
+                    <TextBlock Text="v1.0.0" FontSize="12" FontWeight="Bold" Foreground="{StaticResource InactiveTextColor}"/>
+                </StackPanel>
+                
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="1" Background="#F0F0F0">
+            <ContentControl Content="{Binding CurrentViewModel}" />
+        </Border>
     </Grid>
 </Window>

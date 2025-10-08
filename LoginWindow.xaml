@@ -6,15 +6,17 @@
         xmlns:local="clr-namespace:GreenStock"
         xmlns:viewmodels="clr-namespace:GreenStock.ViewModels" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
-    
+        Title="Iniciar Sesión - POS" 
+        Height="550" Width="400"
+        WindowStartupLocation="CenterScreen" 
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        Background="Transparent"
+        AllowsTransparency="True">
+
     <Window.DataContext>
         <viewmodels:LoginViewModel/>
     </Window.DataContext>
-    
-    <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
-    </Window.Resources>
 
     <Window.Visibility>
         <Binding Path="Visibility" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
@@ -28,13 +30,13 @@
 
         <Grid>
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0">
-                <fa:IconImage Icon="Lock" Width="40" Height="40" Foreground="#6A1B9A" Margin="0,0,0,10"/>
+                <fa:IconImage Icon="Lock" Width="40" Height="40" Foreground="#008000" Margin="0,0,0,10"/>
                 <TextBlock Text="INICIAR SESIÓN" 
                        FontSize="24" 
                        FontWeight="SemiBold" 
                        Foreground="#333" 
                        Margin="0,0,0,5"/>
-                <TextBlock Text="Accede a tu sistema POS" 
+                <TextBlock Text="Acceder a GreenStock" 
                        FontSize="14" 
                        Foreground="#888" 
                        HorizontalAlignment="Center"
@@ -44,11 +46,11 @@
             <StackPanel Width="300" VerticalAlignment="Center" Margin="0,80,0,0">
 
                 <TextBlock Text="Usuario" FontWeight="Medium" Foreground="#333"/>
-                <TextBox 
+                <TextBox Style="{StaticResource LoginTextBoxStyle}" 
                      Text="{Binding User.Username, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="Contraseña" FontWeight="Medium" Foreground="#333"/>
-                <TextBox
+                <TextBox Style="{StaticResource LoginTextBoxStyle}" 
                      Text="{Binding User.Password, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <TextBlock Text="{Binding ErrorMessage}" 
@@ -57,8 +59,8 @@
                        Margin="0,0,0,20" 
                        TextWrapping="Wrap"/>
 
-                <Button Content="ACCEDER AL SISTEMA" 
-                    
+                <Button Content="ACCEDER" 
+                    Style="{StaticResource LoginButtonStyle}"
                     Command="{Binding LoginCommand}" 
                     Height="50"
                     

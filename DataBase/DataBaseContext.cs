@@ -19,6 +19,11 @@ namespace GreenStock.DataBase
         public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<BrandModel> Brands { get; set; }
 
+        public DbSet<SaleItemModel> SaleItems { get; set; }
+        public DbSet<RoleModel> Roles { get; set; }
+
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"Server=AUGUSTO\SQLEXPRESS; Database=GreenStock; Trusted_Connection=true; Encrypt=False; TrustServerCertificate=True;");

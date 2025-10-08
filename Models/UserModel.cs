@@ -13,7 +13,8 @@ namespace GreenStock.Models
         private string _Phone;
         private string _Username;
         private string _Password;
-        private string _Role;
+        private int _RoleId;
+        public virtual RoleModel Role { get; set; }
 
         public int Id
         {
@@ -70,14 +71,15 @@ namespace GreenStock.Models
                 }
             }
         }
-        public string Role
+
+        public int RoleId
         {
-            get => _Role;
+            get => _RoleId;
             set
             {
-                if (value != _Role)
+                if (value != _RoleId)
                 {
-                    _Role = value;
+                    _RoleId = value;
                 }
             }
         }
