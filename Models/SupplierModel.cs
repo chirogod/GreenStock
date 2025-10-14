@@ -11,6 +11,10 @@ namespace GreenStock.Models
         private int _Id;
         private string _Name;
         private string _Description;
+        private string _Cuit;
+        private string _Phone;
+        private string _Email;
+        private string _Notes;
 
         public int Id
         {
@@ -42,6 +46,50 @@ namespace GreenStock.Models
                 if (value != _Description)
                 {
                     _Description = value;
+                }
+            }
+        }
+        public string Cuit
+        {
+            get => _Cuit;
+            set
+            {
+                if (value != _Cuit)
+                {
+                    _Cuit = value;
+                }
+            }
+        }
+        public string Phone
+        {
+            get => _Phone;
+            set
+            {
+                if (value != _Phone)
+                {
+                    _Phone = value;
+                }
+            }
+        }
+        public string Email
+        {
+            get => _Email;
+            set
+            {
+                if (value != _Email)
+                {
+                    _Email = value;
+                }
+            }
+        }
+        public string Notes
+        {
+            get => _Notes;
+            set
+            {
+                if (value != _Notes)
+                {
+                    _Notes = value;
                 }
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,12 +10,12 @@ namespace GreenStock.DataBase.Interfaces
     public interface IGenericRepository<T> where T : class
     {
         Task<T?> GetByIdAsync(int id);
-        Task<List<T>> GetAllAsync(); 
+        Task<ObservableCollection<T>> GetAllAsync(); 
 
-        Task AddAsync(T entity);
-        void UpdateAsync(T entity);
-        void DeleteAsync(T entity);
+        Task Add(T entity);
+        Task Update(T entity);
+        Task Delete(T entity);
 
-        Task<int> SaveChangesAsync();
+
     }
 }

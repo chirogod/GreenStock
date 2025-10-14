@@ -11,41 +11,48 @@ namespace GreenStock.DataBase
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected readonly DbContext _context;
-        protected readonly DbSet<T> _dbSet;
-        
-        public GenericRepository(DbContext context)
-        {
-            _context = context;
-            _dbSet = context.Set<T>();
-        }
         public async Task<T?> GetByIdAsync(int id)
         {
-            return await _dbSet.FindAsync(id);
+            using(var context = new DataBaseContext())
+            {
+                return await context.Set<T>().FindAsync(id);
+            }
         }
 
-        public async Task<List<T>> GetAllAsync()
+        public async Task<ObservableCollection<T>> GetAllAsync()
         {
-            return await _dbSet.ToListAsync();
+            using (var context = new DataBaseContext())
+            {
+                var list = await context.Set<T>().ToListAsync();
+                return new ObservableCollection<T>(list);
+            }
         }
 
-        public async Task AddAsync(T entity)
+        public async Task Add(T entity)
         {
-            await _dbSet.AddAsync(entity);
-        }
-        public void UpdateAsync(T entity)
-        {
-            _dbSet.Update(entity);
-        }
-        public void DeleteAsync(T entity)
-        {
-            _dbSet.Remove(entity);
-        }
+            using (var context = new DataBaseContext())
+            {
+                await context.Set<T>().AddAsync(entity);
+                await context.SaveChangesAsync();
 
-        public async Task<int> SaveChangesAsync()
-        {
-            return await _context.SaveChangesAsync();
+            }
         }
+        public async Task Update(T entity)
+        {
+            using (var context = new DataBaseContext())
+            {
+                context.Set<T>().Update(entity);
+                await context.SaveChangesAsync();
 
+            }
+        }
+        public async Task Delete(T entity)
+        {
+            using (var context = new DataBaseContext())
+            {
+                context.Set<T>().Remove(entity);
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }

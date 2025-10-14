@@ -9,13 +9,13 @@
         mc:Ignorable="d"
         Title="GreenStock"
         WindowState="Maximized"
-        Height="450" Width="800">
+        Height="1080" Width="1920">
+
 
     <Window.DataContext>
         <viewmodels:MainWindowViewModel/>
     </Window.DataContext>
-
-
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="220"/> 
@@ -47,7 +47,7 @@
                     <Button Style="{StaticResource SidebarButtonStyle}"
                             Command="{Binding NavigateToDashboardCommand}">
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="House" Width="16" Height="16" Foreground="Green"/>
+                            <fa:IconImage Margin="0, 0, 8, 0" Icon="House" Width="16" Height="16"/>
                             <TextBlock Text="Dashboard"/>
                         </StackPanel>
                     </Button>
@@ -55,7 +55,63 @@
                     <Button Style="{StaticResource SidebarButtonStyle}"
                             Command="{Binding NavigateToConfigCommand}">
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="User" Width="16" Height="16" Foreground="Green"/>
+                            <fa:IconImage Margin="0, 0, 8, 0" Icon="Calculator" Width="16" Height="16"/>
+                            <TextBlock Text="Caja"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource SidebarButtonStyle}"
+                            Command="{Binding NavigateToConfigCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Margin="0, 0, 8, 0" Icon="CartShopping" Width="16" Height="16"/>
+                            <TextBlock Text="Ventas"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource SidebarButtonStyle}"
+                            Command="{Binding NavigateToProductCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Margin="0, 0, 8, 0" Icon="Box" Width="16" Height="16" />
+                            <TextBlock Text="Productos"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource SidebarButtonStyle}"
+                            Command="{Binding NavigateToConfigCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Margin="0, 0, 8, 0" Icon="ShoppingBag" Width="16" Height="16"/>
+                            <TextBlock Text="Compras"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource SidebarButtonStyle}"
+                            Command="{Binding NavigateToSupplierCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Margin="0, 0, 8, 0" Icon="Truck" Width="16" Height="16"/>
+                            <TextBlock Text="Proveedores"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource SidebarButtonStyle}"
+                            Command="{Binding NavigateToCatalogoCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Margin="0, 0, 8, 0" Icon="Tag" Width="16" Height="16"/>
+                            <TextBlock Text="Catalogo"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource SidebarButtonStyle}"
+                            Command="{Binding NavigateToClientCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Margin="0, 0, 8, 0" Icon="Users" Width="16" Height="16"/>
+                            <TextBlock Text="Clientes"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource SidebarButtonStyle}"
+                            Command="{Binding NavigateToUserCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Margin="0, 0, 8, 0" Icon="UserCheck" Width="16" Height="16"/>
                             <TextBlock Text="Usuarios"/>
                         </StackPanel>
                     </Button>
@@ -63,7 +119,15 @@
                     <Button Style="{StaticResource SidebarButtonStyle}"
                             Command="{Binding NavigateToConfigCommand}">
                         <StackPanel Orientation="Horizontal">
-                            <fa:IconImage Icon="Gear" Width="16" Height="16" Foreground="Green"/>
+                            <fa:IconImage Margin="0, 0, 8, 0" Icon="FileArrowUp" Width="16" Height="16" />
+                            <TextBlock Text="Reportes"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Style="{StaticResource SidebarButtonStyle}"
+                            Command="{Binding NavigateToConfigCommand}">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:IconImage Margin="0, 0, 8, 0" Icon="Gear" Width="16" Height="16"/>
                             <TextBlock Text="Configuracion"/>
                         </StackPanel>
                     </Button>

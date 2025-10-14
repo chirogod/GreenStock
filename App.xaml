@@ -5,6 +5,7 @@
              xmlns:viewmodels="clr-namespace:GreenStock.ViewModels"
              xmlns:views="clr-namespace:GreenStock.Views"
              Startup="AppStart">
+    
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -13,6 +14,21 @@
 
             <DataTemplate DataType="{x:Type viewmodels:DashboardViewModel}">
                 <views:DashboardView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:SupplierViewModel}">
+                <views:SupplierView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:CatalogoViewModel}">
+                <views:CatalogoView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:ProductViewModel}">
+                <views:ProductView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:ClientViewModel}">
+                <views:ClientView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:UserViewModel}">
+                <views:UserView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:ConfigViewModel}">
                 <views:ConfigView/>
