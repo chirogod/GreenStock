@@ -15,7 +15,7 @@ namespace GreenStock.ViewModels
 {
     public class SupplierViewModel : BaseViewModel
     {
-        private readonly IGenericRepository<SupplierModel> _supplierRepository;
+        private readonly GenericRepository<SupplierModel> _supplierRepository;
         private ObservableCollection<SupplierModel> _Suppliers;
         private SupplierModel _Supplier;
         private SupplierModel _SelectedSupplier;

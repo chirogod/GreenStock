@@ -3,10 +3,166 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GreenStock.Views"
+             xmlns:local="clr-namespace:GreenStock.Views" 
+             xmlns:viewmodels="clr-namespace:GreenStock.ViewModels" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="1080" d:DesignWidth="1920">
+
+    <UserControl.Resources>
+        <viewmodels:ClientViewModel x:Key="clients"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+
+    <Grid Background="#fff"
+          DataContext="{Binding Source={StaticResource clients}}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Column="0">
+                <StackPanel Orientation="Horizontal">
+                    <fa:IconImage Margin="0, 0, 8, 0" Icon="Users" Width="38" Height="38"/>
+                    <TextBlock Text="Clientes" FontSize="24" FontWeight="Bold"/>
+                </StackPanel>
+                <TextBlock Text="Gestiona la información de tus clientes" FontSize="14" Foreground="Gray"/>
+            </StackPanel>
+
+            <Button Content="+ Nuevo Cliente"
+                    Grid.Column="1"
+                    Padding="15,0"
+                    Background="#38C172"  Foreground="White"
+                    BorderBrush="Transparent"
+                    HorizontalAlignment="Right"
+                    Command="{Binding OpenAddModalCommand}"/>
+        </Grid>
+
+        <DataGrid Grid.Row="1"
+                  Margin="10"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding Clients}"
+                  SelectedItem="{Binding SelectedClient, Mode=TwoWay}">
+
+            <DataGrid.InputBindings>
+                <MouseBinding MouseAction="LeftDoubleClick"
+                              Command="{Binding OpenUpdateModalCommand}" />
+            </DataGrid.InputBindings>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="Auto"/>
+                <DataGridTextColumn Header="Nombre Completo" Binding="{Binding FullName}" Width="*"/>
+                <DataGridTextColumn Header="Teléfono" Binding="{Binding Phone}" Width="*"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
+        <Grid Grid.Row="0" Grid.RowSpan="3"
+              Background="#99000000"
+              Visibility="{Binding IsAddModalOpen, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+            <Border Width="650"  Height="Auto"
+                    Background="White"
+                    CornerRadius="8"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Padding="25">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,20">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Agregar Nuevo Cliente" FontSize="20" FontWeight="Bold" Foreground="#1E1E1E"/>
+                            <TextBlock Text="Completa los datos del cliente" FontSize="13" Foreground="#666666"/>
+                        </StackPanel>
+                        <Button Content="✕" Style="{StaticResource CloseButtonStyle}" Foreground="#333" Command="{Binding CloseModalCommand}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, -10, -10, 0"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Margin="0,0,0,20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                            <TextBlock Text="Nombre" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Client.FullName, Mode=TwoWay}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Margin="0,0,0,15">
+                            <TextBlock Text="Teléfono" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Client.Phone, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button Content="Cancelar" Command="{Binding CloseModalCommand}" Background="Transparent" Foreground="#333" BorderBrush="#E0E0E0" BorderThickness="1" Padding="20,8" Margin="0,0,10,0"/>
+                        <Button Content="Agregar Cliente" Command="{Binding AddCommand}" Background="#1E1E1E"  Foreground="White" BorderBrush="Transparent" Padding="20,8"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.RowSpan="3"
+              Background="#99000000"
+              Visibility="{Binding IsUpdateModalOpen, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+            <Border Width="650"  Height="Auto"
+                    Background="White"
+                    CornerRadius="8"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Padding="25">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,20">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Editar Cliente" FontSize="20" FontWeight="Bold" Foreground="#1E1E1E"/>
+                            <TextBlock Text="Actualiza o elimina los datos del cliente" FontSize="13" Foreground="#666666"/>
+                        </StackPanel>
+                        <Button Content="✕" Style="{StaticResource CloseButtonStyle}" Foreground="#333" Command="{Binding CloseModalCommand}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, -10, -10, 0"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Margin="0,0,0,20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                            <TextBlock Text="Nombre" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Client.FullName, Mode=TwoWay}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Margin="0,0,0,15">
+                            <TextBlock Text="Telefono" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Client.Phone, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+
+                        <Button Content="Cancelar" Command="{Binding CloseModalCommand}" Background="Transparent" Foreground="#333" BorderBrush="#E0E0E0" BorderThickness="1" Padding="20,8" Margin="0,0,10,0"/>
+                        <Button Content="Eliminar" Command="{Binding DeleteCommand}" Background="#E0E0E0" Foreground="#333" BorderBrush="Transparent" Padding="20,8" Margin="0,0,10,0"/>
+                        <Button Content="Editar" Command="{Binding UpdateCommand}" Background="#1E1E1E" Foreground="White" BorderBrush="Transparent" Padding="20,8"/>
+
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>
