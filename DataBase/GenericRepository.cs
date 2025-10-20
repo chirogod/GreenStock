@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,11 +20,16 @@ namespace GreenStock.DataBase
             }
         }
 
-        public async Task<ObservableCollection<T>> GetAllAsync()
+        public async Task<ObservableCollection<T>> GetAllAsync(params Expression<Func<T, object>>[] includes)
         {
             using (var context = new DataBaseContext())
             {
-                var list = await context.Set<T>().ToListAsync();
+                IQueryable<T> query = context.Set<T>();
+
+                foreach (var include in includes)
+                    query = query.Include(include);
+
+                var list = await query.ToListAsync();
                 return new ObservableCollection<T>(list);
             }
         }

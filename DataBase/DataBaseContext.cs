@@ -28,5 +28,28 @@ namespace GreenStock.DataBase
         {
             optionsBuilder.UseSqlServer(@"Server=AUGUSTO\SQLEXPRESS; Database=GreenStock; Trusted_Connection=true; Encrypt=False; TrustServerCertificate=True;");
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // --- Relaciones de Product ---
+            modelBuilder.Entity<ProductModel>()
+                .HasOne(p => p.Category)
+                .WithMany()
+                .HasForeignKey(p => p.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ProductModel>()
+                .HasOne(p => p.Brand)
+                .WithMany()
+                .HasForeignKey(p => p.BrandId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ProductModel>()
+                .HasOne(p => p.Supplier)
+                .WithMany()
+                .HasForeignKey(p => p.SupplierId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
     }
 }

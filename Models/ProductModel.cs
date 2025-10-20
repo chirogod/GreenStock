@@ -15,6 +15,7 @@ namespace GreenStock.Models
         private int _SupplierId;
         private int _BrandId;
         private int _CategoryId;
+        private string _Medida;
         private bool _Pesable;
         private string _Plu;
         private decimal _StockActual;
@@ -102,6 +103,18 @@ namespace GreenStock.Models
                 if (value != _CategoryId)
                 {
                     _CategoryId = value;
+                }
+            }
+        }
+
+        public string Medida
+        {
+            get => _Medida;
+            set
+            {
+                if (value != _Medida)
+                {
+                    _Medida = value;
                 }
             }
         }

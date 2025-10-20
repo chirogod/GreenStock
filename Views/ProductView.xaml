@@ -4,9 +4,509 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GreenStock.Views"
+             xmlns:viewmodels="clr-namespace:GreenStock.ViewModels"
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <viewmodels:ProductViewModel x:Key="products"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid Background="#fff"
+          DataContext="{Binding Source={StaticResource products}}">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Column="0">
+                <StackPanel Orientation="Horizontal">
+                    <fa:IconImage Margin="0, 0, 8, 0" Icon="Box" Width="38" Height="38"/>
+                    <TextBlock Text="Productos" FontSize="24" FontWeight="Bold"/>
+                </StackPanel>
+
+                <TextBlock Text="Gestiona la información de tus productos" FontSize="14" Foreground="Gray"/>
+            </StackPanel>
+
+            <Button Content="+ Nuevo Producto"
+                    Grid.Column="1"
+                    Padding="15,0"
+                    Background="#38C172"  Foreground="White"
+                    BorderBrush="Transparent"
+                    HorizontalAlignment="Right"
+                    Command="{Binding OpenAddModalCommand}"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Width="300" Height="100" 
+                    BorderBrush="#DDDDDD" 
+                    BorderThickness="2" 
+                    CornerRadius="10" 
+                    Background="White"
+                    Grid.Column="0">
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" CornerRadius="3" HorizontalAlignment="Left" MaxWidth="180">
+                            <TextBlock Text="Total Productos" 
+                                       Foreground="Black" 
+                                       FontSize="18"
+                                       FontWeight="SemiBold" 
+                                       TextTrimming="CharacterEllipsis"/>
+                        </Border>
+                        <StackPanel Grid.Row="1" Margin="5">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Margin="0 0 10 0" Icon="Box" Width="24" Height="24"/>
+                                <TextBlock Text="10" FontSize="24" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+
+                </Grid>
+            </Border>
+
+            <Border Width="300" Height="100" 
+                    BorderBrush="#DDDDDD" 
+                    BorderThickness="2" 
+                    CornerRadius="10" 
+                    Background="White"
+                    Grid.Column="1">
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" CornerRadius="3" HorizontalAlignment="Left" MaxWidth="180">
+                            <TextBlock Text="Pesables" 
+                           Foreground="Black" 
+                           FontSize="18"
+                           FontWeight="SemiBold" 
+                           TextTrimming="CharacterEllipsis"/>
+                        </Border>
+                        <StackPanel Grid.Row="1" Margin="5">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Margin="0 0 10 0" Icon="ScaleBalanced" Width="24" Height="24"/>
+                                <TextBlock Text="5" FontSize="24" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+
+
+                </Grid>
+            </Border>
+
+            <Border Width="300" Height="100" 
+                    BorderBrush="#DDDDDD" 
+                    BorderThickness="2" 
+                    CornerRadius="10" 
+                    Background="White"
+                    Grid.Column="2">
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" CornerRadius="3" HorizontalAlignment="Left" MaxWidth="180">
+                            <TextBlock Text="Stock Critico" 
+                                       Foreground="Black" 
+                                       FontSize="18"
+                                       FontWeight="SemiBold" 
+                                       TextTrimming="CharacterEllipsis"/>
+                        </Border>
+                        <StackPanel Grid.Row="1" Margin="5">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Margin="0 0 10 0" Icon="Warning" Width="24" Height="24"/>
+                                <TextBlock Text="2" FontSize="24" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <Border Width="300" Height="100" 
+                    BorderBrush="#DDDDDD" 
+                    BorderThickness="2" 
+                    CornerRadius="10" 
+                    Background="White"
+                    Grid.Column="3">
+                <Grid Margin="15">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" CornerRadius="3" HorizontalAlignment="Left" MaxWidth="180">
+                            <TextBlock Text="Categorias" 
+                                       Foreground="Black" 
+                                       FontSize="18"
+                                       FontWeight="SemiBold" 
+                                       TextTrimming="CharacterEllipsis"/>
+                        </Border>
+                        <StackPanel Grid.Row="1" Margin="5">
+                            <StackPanel Orientation="Horizontal">
+                                <fa:IconImage Margin="0 0 10 0" Icon="Tag" Width="24" Height="24"/>
+                                <TextBlock Text="6" FontSize="24" FontWeight="Bold"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="10">
+            <Border CornerRadius="5" Background="#F0F0F0" Padding="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="10, 0">
+                        <TextBlock Text="Buscar por nombre, código, plu:" Margin="0,0,0,5"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <fa:IconImage Grid.Column="0" 
+                                  Icon="Search" 
+                                  Width="18" 
+                                  Height="18"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,8,0"
+                                  Foreground="#606060"/>
+
+                            <TextBox Grid.Column="1"  
+                             BorderThickness="0"
+                             Background="White"  
+                             VerticalAlignment="Center"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="10">
+            <DataGrid ItemsSource="{Binding Products}"
+              AutoGenerateColumns="False" 
+              IsReadOnly="True" 
+              CanUserAddRows="False"
+              HeadersVisibility="Column"
+              Background="#f0f0f0" 
+              BorderThickness="0" 
+              RowBackground="White"
+              AlternatingRowBackground="#f9f9f9"
+              GridLinesVisibility="None"
+              RowDetailsVisibilityMode="Collapsed">
+
+                <DataGrid.Resources>
+                    <Style x:Key="ActionButton" TargetType="Button">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Foreground" Value="#555555"/>
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Margin" Value="0,0,5,0"/>
+                    </Style>
+                </DataGrid.Resources>
+
+                <DataGrid.Columns>
+
+                    <DataGridTemplateColumn Header="Producto" Width="2*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="5,3">
+                                    <TextBlock Text="{Binding Name}" FontWeight="SemiBold" Foreground="#333333"/>
+                                    <TextBlock Text="{Binding Code, StringFormat=' {0}'}" FontSize="10" Foreground="#888888"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Tipo" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Category.Name}" Margin="0,0,5,0" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Tipo" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Medida}" Margin="0,0,5,0" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Stock Actual" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding StockActual}" Margin="0,0,5,0" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Stock Minimo" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding StockMinimo}" Margin="0,0,5,0" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Precio" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding VentaConIva, StringFormat='C0', ConverterCulture='es-AR'}" Margin="0,0,5,0" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Marca" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Brand.Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Proveedor" Width="*">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Supplier.Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.RowSpan="3"
+              Background="#99000000"
+              Visibility="{Binding IsAddModalOpen, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+            <Border Width="650"  Height="Auto"
+                    Background="White"
+                    CornerRadius="8"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Padding="25">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,20">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Agregar Nuevo Producto" FontSize="20" FontWeight="Bold" Foreground="#1E1E1E"/>
+                            <TextBlock Text="Completa los datos del producto" FontSize="13" Foreground="#666666"/>
+                        </StackPanel>
+
+                        <Button Content="✕" 
+                                Style="{StaticResource CloseButtonStyle}"  
+                                Foreground="#333" 
+                                Command="{Binding CloseModalCommand}"
+                                HorizontalAlignment="Right" VerticalAlignment="Top" 
+                                Margin="10, -10, -10, 0"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Codigo" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.Code, Mode=TwoWay}" />
+                        </StackPanel>
+
+
+                        <StackPanel Grid.Row="0" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Nombre" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.Name, Mode=TwoWay}"/>
+                        </StackPanel>
+
+
+
+                        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Descripcion" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.Description, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Categoria" Margin="0,0,0,5" FontWeight="SemiBold"/>
+
+                            <ComboBox ItemsSource="{Binding Categories}"
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Id"
+                                      SelectedValue="{Binding Product.CategoryId, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Proveedor" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <ComboBox ItemsSource="{Binding Suppliers}"
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Id"
+                                      SelectedValue="{Binding Product.SupplierId, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Marca" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <ComboBox ItemsSource="{Binding Brands}"
+                                      DisplayMemberPath="Name"
+                                      SelectedValuePath="Id"
+                                      SelectedValue="{Binding Product.BrandId, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Pesable" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.Pesable, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="3" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Medida" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.Medida, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="PLU" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.Plu, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="5" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Pesable" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.Pesable, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="5" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Medida" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.Medida, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="6" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Costo sin iva" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.CostoSinIva, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="6" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Costo con iva" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.CostoConIva, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="7" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Venta sin iva" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.VentaSinIva, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="7" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Venta con iva" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.VentaConIva, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                    </Grid>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+
+                        <Button Content="Cancelar"
+                                Command="{Binding CloseModalCommand}"
+                                Background="Transparent"
+                                Foreground="#333"
+                                BorderBrush="#E0E0E0"
+                                BorderThickness="1"
+                                Padding="20,8"
+                                Margin="0,0,10,0"/>
+
+                        <Button Content="Agregar Proveedor"
+                                Command="{Binding AddProductCommand}"
+                                Background="#1E1E1E"  Foreground="White"
+                                BorderBrush="Transparent"
+                                Padding="20,8"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>
