@@ -45,6 +45,7 @@ namespace GreenStock.ViewModels
             _Categories = new ObservableCollection<CategoryModel>();
             _Brands = new ObservableCollection<BrandModel>();
             _Suppliers = new ObservableCollection<SupplierModel>();
+
             _Product = new ProductModel();
 
             AddProductCommand = new AsyncCommand(AddProductExecuteAsync, AddProductCanExecute);

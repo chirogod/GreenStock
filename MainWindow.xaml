@@ -61,7 +61,7 @@
                     </Button>
 
                     <Button Style="{StaticResource SidebarButtonStyle}"
-                            Command="{Binding NavigateToConfigCommand}">
+                            Command="{Binding NavigateToSaleCommand}">
                         <StackPanel Orientation="Horizontal">
                             <fa:IconImage Margin="0, 0, 8, 0" Icon="CartShopping" Width="16" Height="16"/>
                             <TextBlock Text="Ventas"/>

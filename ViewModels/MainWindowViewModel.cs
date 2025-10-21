@@ -29,6 +29,8 @@ namespace GreenStock.ViewModels
         public ICommand NavigateToDashboardCommand { get; }
         public ICommand NavigateToSupplierCommand { get; }
         public ICommand NavigateToCatalogoCommand { get; }
+
+        public ICommand NavigateToSaleCommand { get; }
         public ICommand NavigateToProductCommand { get; }
         public ICommand NavigateToClientCommand { get; }
         public ICommand NavigateToUserCommand { get; }
@@ -36,16 +38,15 @@ namespace GreenStock.ViewModels
         public MainWindowViewModel()
         {
 
-            // Usar _serviceProvider.GetService<T>() en los comandos:
             NavigateToDashboardCommand = new RelayCommand(o => CurrentViewModel = new DashboardViewModel());
             NavigateToSupplierCommand = new RelayCommand(o => CurrentViewModel = new SupplierViewModel());
             NavigateToCatalogoCommand = new RelayCommand(o => CurrentViewModel = new CatalogoViewModel());
+            NavigateToSaleCommand = new RelayCommand(o => CurrentViewModel = new SaleViewModel());
             NavigateToProductCommand = new RelayCommand(o => CurrentViewModel = new ProductViewModel());
             NavigateToClientCommand = new RelayCommand(o => CurrentViewModel = new ClientViewModel());
             NavigateToUserCommand = new RelayCommand(o => CurrentViewModel = new UserViewModel());
             NavigateToConfigCommand = new RelayCommand(o => CurrentViewModel = new ConfigViewModel());
 
-            // Establecer el VM inicial (también debe obtenerse del contenedor)
             CurrentViewModel = new DashboardViewModel();
         }
     }
