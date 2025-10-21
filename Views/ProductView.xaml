@@ -82,12 +82,10 @@
                         <StackPanel Grid.Row="1" Margin="5">
                             <StackPanel Orientation="Horizontal">
                                 <fa:IconImage Margin="0 0 10 0" Icon="Box" Width="24" Height="24"/>
-                                <TextBlock Text="10" FontSize="24" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Products.Count}" FontSize="24" FontWeight="Bold"/>
                             </StackPanel>
                         </StackPanel>
                     </Grid>
-
-
                 </Grid>
             </Border>
 
@@ -191,7 +189,7 @@
                         <StackPanel Grid.Row="1" Margin="5">
                             <StackPanel Orientation="Horizontal">
                                 <fa:IconImage Margin="0 0 10 0" Icon="Tag" Width="24" Height="24"/>
-                                <TextBlock Text="6" FontSize="24" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Categories.Count}" FontSize="24" FontWeight="Bold"/>
                             </StackPanel>
                         </StackPanel>
                     </Grid>
@@ -204,7 +202,10 @@
             <Border CornerRadius="5" Background="#F0F0F0" Padding="5">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
@@ -232,34 +233,36 @@
                              VerticalAlignment="Center"/>
                         </Grid>
                     </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="0,0,0,15">
+                        <TextBlock Text="Marca" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                        <ComboBox ItemsSource="{Binding Brands}"
+                                  DisplayMemberPath="Name"
+                                  SelectedValuePath="Id"
+                                  SelectedValue="{Binding Product.BrandId, Mode=TwoWay}"/>
+                    </StackPanel>
                 </Grid>
             </Border>
         </Grid>
 
         <Grid Grid.Row="3" Margin="10">
             <DataGrid ItemsSource="{Binding Products}"
-              AutoGenerateColumns="False" 
-              IsReadOnly="True" 
-              CanUserAddRows="False"
-              HeadersVisibility="Column"
-              Background="#f0f0f0" 
-              BorderThickness="0" 
-              RowBackground="White"
-              AlternatingRowBackground="#f9f9f9"
-              GridLinesVisibility="None"
-              RowDetailsVisibilityMode="Collapsed">
+                      SelectedItem="{Binding SelectedProduct}"
+                      AutoGenerateColumns="False" 
+                      IsReadOnly="True" 
+                      CanUserAddRows="False"
+                      HeadersVisibility="Column"
+                      Background="#f0f0f0" 
+                      BorderThickness="0" 
+                      RowBackground="White"
+                      AlternatingRowBackground="#f9f9f9"
+                      GridLinesVisibility="None"
+                      RowDetailsVisibilityMode="Collapsed">
 
-                <DataGrid.Resources>
-                    <Style x:Key="ActionButton" TargetType="Button">
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="Foreground" Value="#555555"/>
-                        <Setter Property="FontSize" Value="14"/>
-                        <Setter Property="Cursor" Value="Hand"/>
-                        <Setter Property="Padding" Value="0"/>
-                        <Setter Property="Margin" Value="0,0,5,0"/>
-                    </Style>
-                </DataGrid.Resources>
+                <DataGrid.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick"
+                                  Command="{Binding OpenUpdateModalCommand}" />
+                </DataGrid.InputBindings>
 
                 <DataGrid.Columns>
 
@@ -349,7 +352,7 @@
             </DataGrid>
         </Grid>
 
-        <Grid Grid.Row="0" Grid.RowSpan="3"
+        <Grid Grid.Row="0" Grid.RowSpan="4"
               Background="#99000000"
               Visibility="{Binding IsAddModalOpen, Converter={StaticResource BooleanToVisibilityConverter}}">
 
@@ -396,6 +399,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,15">
@@ -408,8 +412,6 @@
                             <TextBlock Text="Nombre" Margin="0,0,0,5" FontWeight="SemiBold"/>
                             <TextBox Text="{Binding Product.Name, Mode=TwoWay}"/>
                         </StackPanel>
-
-
 
                         <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0,15">
                             <TextBlock Text="Descripcion" Margin="0,0,0,5" FontWeight="SemiBold"/>
@@ -452,19 +454,20 @@
                         </StackPanel>
 
                         <StackPanel Grid.Row="4" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Stock Actual" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.StockActual, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Stock Minimo" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.StockMinimo, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="5" Grid.Column="0" Margin="0,0,0,15">
                             <TextBlock Text="PLU" Margin="0,0,0,5" FontWeight="SemiBold"/>
                             <TextBox Text="{Binding Product.Plu, Mode=TwoWay}"/>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="5" Grid.Column="0" Margin="0,0,0,15">
-                            <TextBlock Text="Pesable" Margin="0,0,0,5" FontWeight="SemiBold"/>
-                            <TextBox Text="{Binding Product.Pesable, Mode=TwoWay}"/>
-                        </StackPanel>
-
-                        <StackPanel Grid.Row="5" Grid.Column="2" Margin="0,0,0,15">
-                            <TextBlock Text="Medida" Margin="0,0,0,5" FontWeight="SemiBold"/>
-                            <TextBox Text="{Binding Product.Medida, Mode=TwoWay}"/>
-                        </StackPanel>
 
                         <StackPanel Grid.Row="6" Grid.Column="0" Margin="0,0,0,15">
                             <TextBlock Text="Costo sin iva" Margin="0,0,0,5" FontWeight="SemiBold"/>
@@ -504,6 +507,157 @@
                                 Background="#1E1E1E"  Foreground="White"
                                 BorderBrush="Transparent"
                                 Padding="20,8"/>
+                    </StackPanel>
+                    
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.RowSpan="4"
+              Background="#99000000"
+              Visibility="{Binding IsUpdateModalOpen, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+            <Border Width="650"  Height="Auto"
+            Background="White"
+            CornerRadius="8"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Padding="25">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Margin="0,0,0,20">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Agregar Nuevo Producto" FontSize="20" FontWeight="Bold" Foreground="#1E1E1E"/>
+                            <TextBlock Text="Completa los datos del producto" FontSize="13" Foreground="#666666"/>
+                        </StackPanel>
+
+                        <Button Content="✕" 
+                        Style="{StaticResource CloseButtonStyle}"  
+                        Foreground="#333" 
+                        Command="{Binding CloseModalCommand}"
+                        HorizontalAlignment="Right" VerticalAlignment="Top" 
+                        Margin="10, -10, -10, 0"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="20"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Codigo" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.Code, Mode=TwoWay}" />
+                        </StackPanel>
+
+
+                        <StackPanel Grid.Row="0" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Nombre" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.Name, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Descripcion" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.Description, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Categoria" Margin="0,0,0,5" FontWeight="SemiBold"/>
+
+                            <ComboBox ItemsSource="{Binding Categories}"
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Id"
+                              SelectedValue="{Binding Product.CategoryId, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Proveedor" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <ComboBox ItemsSource="{Binding Suppliers}"
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Id"
+                              SelectedValue="{Binding Product.SupplierId, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Marca" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <ComboBox ItemsSource="{Binding Brands}"
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Id"
+                              SelectedValue="{Binding Product.BrandId, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Pesable" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.Pesable, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="3" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Medida" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.Medida, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Stock Actual" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.StockActual, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Stock Minimo" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.StockMinimo, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="5" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="PLU" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.Plu, Mode=TwoWay}"/>
+                        </StackPanel>
+
+
+                        <StackPanel Grid.Row="6" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Costo sin iva" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.CostoSinIva, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="6" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Costo con iva" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.CostoConIva, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="7" Grid.Column="0" Margin="0,0,0,15">
+                            <TextBlock Text="Venta sin iva" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.VentaSinIva, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="7" Grid.Column="2" Margin="0,0,0,15">
+                            <TextBlock Text="Venta con iva" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding Product.VentaConIva, Mode=TwoWay}"/>
+                        </StackPanel>
+
+                    </Grid>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+
+                        <Button Content="Cancelar" Command="{Binding CloseModalCommand}" Background="Transparent" Foreground="#333" BorderBrush="#E0E0E0" BorderThickness="1" Padding="20,8" Margin="0,0,10,0"/>
+                        <Button Content="Eliminar" Command="{Binding DeleteProductCommand}" Background="#E0E0E0" Foreground="#333" BorderBrush="Transparent" Padding="20,8" Margin="0,0,10,0"/>
+                        <Button Content="Editar" Command="{Binding UpdateProductCommand}" Background="#1E1E1E" Foreground="White" BorderBrush="Transparent" Padding="20,8"/>
+
                     </StackPanel>
                 </Grid>
             </Border>
