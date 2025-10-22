@@ -21,6 +21,11 @@ namespace GreenStock.ViewModels
         private ProductModel _SelectedProduct;
 
         public ICommand AddToSaleItems { get; }
+        public ICommand AddWeighedSaleItem { get; }
+        public ICommand CloseModalCommand { get; }
+
+        private bool _IsBalanzaModalOpen;
+        private decimal _BalanzaWeight;
 
         public SaleViewModel()
         {
@@ -29,6 +34,8 @@ namespace GreenStock.ViewModels
             _SaleItems = new ObservableCollection<SaleItemModel>();
 
             AddToSaleItems = new RelayCommand(AddToSaleItemsExecute, AddToSaleItemsCanExecute);
+            AddWeighedSaleItem = new RelayCommand(AddWeighedSaleItemExecute, AddWeighedSaleItemCanExecute);
+            CloseModalCommand = new RelayCommand(CloseModalExecute, CloseModalCanExecute);
 
 
             Task.Run(async () => await LoadProductsAsync());
@@ -81,6 +88,40 @@ namespace GreenStock.ViewModels
             }
         }
 
+        public bool IsBalanzaModalOpen
+        {
+            get => _IsBalanzaModalOpen;
+            set
+            {
+                if(_IsBalanzaModalOpen != value)
+                {
+                    _IsBalanzaModalOpen = value;
+                    OnPropertyChanged(nameof(IsBalanzaModalOpen));
+                }
+            }
+        }
+        public decimal BalanzaWeight
+        {
+            get => _BalanzaWeight;
+            set
+            {
+                if(_BalanzaWeight != value)
+                {
+                    _BalanzaWeight = value;
+                    OnPropertyChanged(nameof(BalanzaWeight));
+                }
+            }
+        }
+
+        public bool CloseModalCanExecute(object x)
+        {
+            return true;
+        }
+        public void CloseModalExecute(object x)
+        {
+            IsBalanzaModalOpen = false;
+        }
+
         public ObservableCollection<ProductModel> Products
         {
             get => _Products;
@@ -116,19 +157,45 @@ namespace GreenStock.ViewModels
                 SelectedProduct = productToAdd;
                 if (SelectedProduct != null)
                 {
-                    var SaleItem = new SaleItemModel
+                    if (SelectedProduct.Pesable)
                     {
-                        ProductId = SelectedProduct.Id,
-                        SalePrice = SelectedProduct.VentaConIva,
-                        Product = SelectedProduct,
-                        Quantity = 1,
-                        Discount = 0,
-                        Total = SelectedProduct.VentaConIva * 1
-                    };
-                    _SaleItems.Add(SaleItem);
+                        IsBalanzaModalOpen = true;
+                        return;
+
+                    }
+                    CreateAddSaleItem(SelectedProduct, 1);
                 }
             }
             
+        }
+
+        private void CreateAddSaleItem(ProductModel product, decimal quantity)
+        {
+            var SaleItem = new SaleItemModel
+            {
+                ProductId = product.Id,
+                Product = product,
+                Quantity = quantity,
+                SalePrice = product.VentaConIva,
+                Discount = 0,
+                Total = (product.VentaConIva * quantity)
+            };
+            _SaleItems.Add(SaleItem);
+        }
+
+        private bool AddWeighedSaleItemCanExecute(object x)
+        {
+            return true;
+        }
+        private void AddWeighedSaleItemExecute(object x)
+        {
+            if(SelectedProduct !=null && BalanzaWeight > 0)
+            {
+                CreateAddSaleItem(SelectedProduct, BalanzaWeight);
+                
+            }
+            BalanzaWeight = 0;
+            IsBalanzaModalOpen = false;
         }
         private async Task LoadProductsAsync()
         {
