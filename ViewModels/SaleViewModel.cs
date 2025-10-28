@@ -4,7 +4,9 @@ using GreenStock.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -13,16 +15,23 @@ namespace GreenStock.ViewModels
 {
     public class SaleViewModel : BaseViewModel
     {
+        private readonly GenericRepository<SaleModel> _SaleRepository;
         private readonly GenericRepository<ProductModel> _ProductRepository;
         private ObservableCollection<ProductModel> _Products;
         private ObservableCollection<SaleItemModel> _SaleItems;
         private SaleItemModel _SaleItem;
+        private SaleModel _Sale;
         private ProductModel _Product;
         private ProductModel _SelectedProduct;
 
         public ICommand AddToSaleItems { get; }
         public ICommand AddWeighedSaleItem { get; }
         public ICommand CloseModalCommand { get; }
+
+        public ICommand UpdateSelectedSaleItemCommand { get; }
+        public ICommand DeleteSelectedSaleItemCommand { get; }
+
+        public ICommand ApplySaleDiscountCommand { get; }
 
         private bool _IsBalanzaModalOpen;
         private decimal _BalanzaWeight;
@@ -33,14 +42,33 @@ namespace GreenStock.ViewModels
             _Products = new ObservableCollection<ProductModel>();
             _SaleItems = new ObservableCollection<SaleItemModel>();
 
+            _Sale = new SaleModel();
+
             AddToSaleItems = new RelayCommand(AddToSaleItemsExecute, AddToSaleItemsCanExecute);
             AddWeighedSaleItem = new RelayCommand(AddWeighedSaleItemExecute, AddWeighedSaleItemCanExecute);
+
+            UpdateSelectedSaleItemCommand = new RelayCommand(UpdateSelectedSaleItemExecute, UpdateSelectedSaleItemCanExecute);
+            DeleteSelectedSaleItemCommand = new RelayCommand(DeleteSelectedSaleItemExecute, DeleteSelectedSaleItemCanExecute);
+
+            ApplySaleDiscountCommand = new RelayCommand(ApplySaleDiscountExecute, ApplySaleDiscountCanExecute);
+
             CloseModalCommand = new RelayCommand(CloseModalExecute, CloseModalCanExecute);
 
 
             Task.Run(async () => await LoadProductsAsync());
         }
-
+        public SaleModel Sale
+        {
+            get => _Sale;
+            set
+            {
+                if (_Sale != value)
+                {
+                    _Sale = value;
+                    OnPropertyChanged(nameof(Sale));
+                }
+            }
+        }
         public ProductModel Product
         {
             get => _Product;
@@ -53,6 +81,19 @@ namespace GreenStock.ViewModels
                 }
             }
         }
+        public SaleItemModel SaleItem
+        {
+            get => _SaleItem;
+            set
+            {
+                if(_SaleItem != value)
+                {
+                    _SaleItem = value;
+                    OnPropertyChanged(nameof(SaleItem));
+                }
+            }
+        }
+
         public ProductModel SelectedProduct
         {
             get => _SelectedProduct;
@@ -139,7 +180,7 @@ namespace GreenStock.ViewModels
             get => _SaleItems;
             set
             {
-                if(_SaleItems != value)
+                if (_SaleItems != value)
                 {
                     _SaleItems = value;
                     OnPropertyChanged(nameof(SaleItems));
@@ -177,10 +218,10 @@ namespace GreenStock.ViewModels
                 Product = product,
                 Quantity = quantity,
                 SalePrice = product.VentaConIva,
-                Discount = 0,
-                Total = (product.VentaConIva * quantity)
+                Discount = 0
             };
             _SaleItems.Add(SaleItem);
+            UpdateSaleTotal();
         }
 
         private bool AddWeighedSaleItemCanExecute(object x)
@@ -197,6 +238,49 @@ namespace GreenStock.ViewModels
             BalanzaWeight = 0;
             IsBalanzaModalOpen = false;
         }
+
+        private bool UpdateSelectedSaleItemCanExecute(object x)
+        {
+            return true;
+        }
+        private void UpdateSelectedSaleItemExecute(object x)
+        {
+            UpdateSaleTotal();
+        }
+
+        private bool DeleteSelectedSaleItemCanExecute(object x)
+        {
+            return true;
+        }
+        private void DeleteSelectedSaleItemExecute(object x)
+        {
+            if (SaleItem != null)
+            {
+                _SaleItems.Remove(SaleItem);
+            }
+
+            UpdateSaleTotal();
+
+        }
+
+        private bool ApplySaleDiscountCanExecute(object x)
+        {
+            return true;
+        }
+        private void ApplySaleDiscountExecute(object x)
+        {
+            UpdateSaleTotal();
+        }
+
+        private void UpdateSaleTotal()
+        {
+            _Sale.SubTotal = _SaleItems.Sum(item => item.Total);
+
+            OnPropertyChanged(nameof(Sale));
+            OnPropertyChanged(nameof(SaleItems));
+            OnPropertyChanged(nameof(SaleItem));
+        }
+
         private async Task LoadProductsAsync()
         {
             var products = await _ProductRepository.GetAllAsync();

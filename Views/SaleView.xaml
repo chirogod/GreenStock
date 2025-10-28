@@ -24,6 +24,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
@@ -122,7 +123,90 @@
                 </Border>
             </Grid>
 
-            <Grid Grid.Row="2" Margin="10,0,10,10">
+            <Grid Grid.Row="2" Margin="10">
+                <Border Background="#F9F5FF"
+                        BorderBrush="#9370DB"  BorderThickness="1"
+                        CornerRadius="5"
+                        Padding="10"
+                        Grid.Column="2">
+
+                    <StackPanel>
+                        <TextBlock Text="Producto Seleccionado"
+                                Foreground="#000"  FontWeight="Bold"
+                                FontSize="16"
+                                Margin="0,0,0,5"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            
+
+                            <Grid Grid.Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0">
+                                    <StackPanel>
+                                        <Label Content="Codigo"/>
+                                        <TextBox IsReadOnly="True" Background="#fff" Text="{Binding SaleItem.Product.Code}"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <Grid Grid.Column="1">
+                                    <StackPanel>
+                                        <Label Content="Producto"/>
+                                        <TextBox IsReadOnly="True" Background="#fff" Text="{Binding SaleItem.Product.Name}"/>
+                                    </StackPanel>
+                                </Grid>
+                                
+                                <Grid Grid.Column="2">
+                                    <StackPanel>
+                                        <Label Content="Cantidad"/>
+                                        <TextBox Background="#fff" Text="{Binding SaleItem.Quantity}"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Column="3">
+                                    <StackPanel>
+                                        <Label Content="Descuento"/>
+                                        <TextBox Background="#fff" Text="{Binding SaleItem.Discount}"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Column="4">
+                                    <StackPanel>
+                                        <Label Content="Actualizar" HorizontalContentAlignment="Center"/>
+                                        <Button Command="{Binding UpdateSelectedSaleItemCommand}"
+                                                
+                                                ToolTip="Actualizar Producto"
+                                                Style="{StaticResource UpdateIconButtonStyle}"
+                                                Background="black"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+
+                            <Grid Grid.Column="1">
+                                <StackPanel>
+                                    <Label Content="Eliminar"/>
+                                    <Button Command="{Binding DeleteSelectedSaleItemCommand}"
+                                            CommandParameter="{Binding}" ToolTip="Eliminar Producto"
+                                            Style="{StaticResource TrashIconButtonStyle}"
+                                            Background="white"/>
+                                </StackPanel>
+                            </Grid>
+
+
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Row="3" Margin="10,0,10,10">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -276,28 +360,184 @@
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" MaxHeight="400"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Border Grid.Row="0" BorderBrush="LightGray" BorderThickness="1" CornerRadius="5" Padding="15">
-                <StackPanel>
-                    <TextBlock Text="Productos en el Carrito" FontWeight="SemiBold" Margin="0,0,0,10"/>
-                    <ListView ItemsSource="{Binding SaleItems}" Height="Auto">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Codigo" DisplayMemberBinding="{Binding Product.Code}"/>
-                                <GridViewColumn Header="Producto" DisplayMemberBinding="{Binding Product.Description}"/>
-                                <GridViewColumn Header="Cantidad" DisplayMemberBinding="{Binding Quantity}"/>
-                                <GridViewColumn Header="Precio Unitario" DisplayMemberBinding="{Binding SalePrice, StringFormat=C}"/>
-                                <GridViewColumn Header="Dcto" DisplayMemberBinding="{Binding Discount}"/>
-                                <GridViewColumn Header="Subtotal" DisplayMemberBinding="{Binding Total, StringFormat=C}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </StackPanel>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal">
+                        <fa:IconImage Icon="ShoppingCart" Width="14" Height="14"/>
+                        <TextBlock Grid.Row="0" Text=" Carrito" FontWeight="SemiBold" />
+                    </StackPanel>
+                   
+
+                    <ListBox Grid.Row="1"
+                             ItemsSource="{Binding SaleItems}"
+                             SelectedItem="{Binding SaleItem, Mode=TwoWay}"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0,2,0,2"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <Border Name="Border"
+                                            Padding="{TemplateBinding Padding}"
+                                            Margin="{TemplateBinding Margin}"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}">
+                                                <ContentPresenter/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="Border" Property="Background" Value="#F0F0FF"/>
+                                                    <Setter TargetName="Border" Property="BorderBrush" Value="#9370DB"/>
+                                                    <Setter TargetName="Border" Property="BorderThickness" Value="1"/>
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="Border" Property="Background" Value="#F8F8FF"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="5" Padding="5" 
+                                Margin="0,3,0,3" Background="White">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Grid Grid.Row="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Margin="0,3,0,0" Foreground="#000" FontSize="12">
+                                            <Run Text="{Binding Product.Name}" FontWeight="SemiBold"/>
+                                            <Run Text="-"/>
+                                            <Run Text="{Binding Product.Code}" FontWeight="SemiBold"/>
+                                            <Run Text="-"/>
+                                            <Run Text="{Binding Product.Plu}" FontWeight="SemiBold"/>
+                                                </TextBlock>
+                                            </StackPanel>
+
+                                        </Grid>
+
+                                        <Grid Grid.Row="1" Margin="0,5,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackPanel Grid.Column="0">
+                                                <TextBlock Margin="0,3,0,0" Foreground="#000" FontSize="12">
+                                            <Run Text="{Binding Quantity}" FontWeight="SemiBold"/>
+                                            <Run Text="x"/>
+                                            <Run Text="{Binding SalePrice, StringFormat=C0}" FontWeight="SemiBold"/>
+                                            <Run Text=" - %"/>
+                                            <Run Text="{Binding Discount}" FontWeight="Bold"/>
+                                            <Run Text="%"/>
+                                                </TextBlock>
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="1" Text="{Binding Total, StringFormat=C0}" 
+                                               FontSize="16" FontWeight="Bold" VerticalAlignment="Center" 
+                                               HorizontalAlignment="Right"/>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </Border>
 
+            <StackPanel Grid.Row="1" Margin="15, 10, 15, 15">
+
+                <Grid Margin="0,5,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Subtotal:" FontSize="14" Foreground="#333" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="{Binding Sale.SubTotal, StringFormat=C2}" 
+                   FontSize="14" FontWeight="SemiBold" HorizontalAlignment="Right"/>
+                </Grid>
+
+                <Border BorderBrush="#D1E7DD" BorderThickness="1" CornerRadius="5" Padding="10" Background="#F0FFF0" Margin="0,5,0,15">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <fa:IconImage Icon="Tag" Grid.Column="0" Width="14" Height="14" Foreground="#0A6847" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="Desc. global:" Grid.Column="1" FontSize="14" Foreground="#0A6847" FontWeight="SemiBold" VerticalAlignment="Center"/>
+
+                        <TextBox Grid.Column="2" Text="{Binding Sale.Discount, Mode=TwoWay}" 
+                                 Width="40" Padding="2" TextAlignment="Center" VerticalContentAlignment="Center"
+                                 BorderThickness="0" Background="Transparent" FontWeight="Bold" Foreground="#0A6847"/>
+                        <TextBlock Text="%" Grid.Column="3" FontSize="14" Foreground="#0A6847" Margin="5,0,0,0" VerticalAlignment="Center"/>
+                        
+                        <Button Grid.Column="4" Content="Aplicar" Command="{Binding ApplySaleDiscountCommand}"></Button>
+                    </Grid>
+                </Border>
+                
+            </StackPanel>
+
+            <StackPanel Grid.Row="2">
+                <Grid Margin="20,5,20,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Total:" FontWeight="Bold" FontSize="18" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="1" Text="{Binding Sale.Total, StringFormat=C0}"
+                               FontSize="28" FontWeight="ExtraBold" Foreground="#1E1E1E" HorizontalAlignment="Right"/>
+                </Grid>
+
+                <Button Content="Finalizar venta"  
+                        Width="300"
+                        Padding="12" 
+                        Background="#28A745"  
+                        Foreground="White"
+                        FontSize="16"
+                        FontWeight="Bold">
+                </Button>
+
+                <Button Content="Limpiar Carrito" 
+                        Background="Transparent" 
+                        Width="100"
+                        Height="Auto"
+                        Foreground="Gray" 
+                        BorderThickness="0" 
+                        Command="{Binding ResetSaleCommand}" />
+            </StackPanel>
         </Grid>
 
         <Grid Grid.Row="0" Grid.RowSpan="3"

@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GreenStock.Models
 {
-    public class SaleModel
+    public class SaleModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         private int _Id;
         private DateTime _Date;
         private decimal _SubTotal;
@@ -59,18 +65,16 @@ namespace GreenStock.Models
                 if (value != _Discount)
                 {
                     _Discount = value;
+                    OnPropertyChanged(nameof(Discount));
+                    OnPropertyChanged(nameof(Total));
                 }
             }
         }
         public decimal Total
         {
-            get => _Total;
-            set
+            get
             {
-                if (value != _Total)
-                {
-                    _Total = value;
-                }
+                return SubTotal - ((SubTotal * Discount) / 100);
             }
         }
         public int ClientId
@@ -97,8 +101,14 @@ namespace GreenStock.Models
         }
     }
 
-    public class SaleItemModel
+    public class SaleItemModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         private int _Id;
         private int _SaleId;
         private int _ProductId;
@@ -161,6 +171,8 @@ namespace GreenStock.Models
                 if (value != _Discount)
                 {
                     _Discount = value;
+                    OnPropertyChanged(nameof(Discount));
+                    OnPropertyChanged(nameof(Total));
                 }
             }
         }
@@ -172,18 +184,18 @@ namespace GreenStock.Models
                 if (value != _Quantity)
                 {
                     _Quantity = value;
+                    OnPropertyChanged(nameof(Quantity));
+                    OnPropertyChanged(nameof(Total));
                 }
             }
         }
         public decimal Total
         {
-            get => _Total;
-            set
+            get
             {
-                if (value != _Total)
-                {
-                    _Total = value;
-                }
+                decimal subtotal = SalePrice * Quantity;
+                decimal totalDiscount = subtotal * (Discount / 100); 
+                return subtotal - totalDiscount;
             }
         }
     }
