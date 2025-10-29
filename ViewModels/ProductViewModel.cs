@@ -196,7 +196,7 @@ namespace GreenStock.ViewModels
 
         public async Task LoadProducts()
         {
-            _Products = await _ProductRepository.GetAllAsync(p=>p.Category, p=>p.Brand, p=>p.Supplier);
+            _Products = await _ProductRepository.GetAllAsync(null, p=>p.Category, p=>p.Brand, p=>p.Supplier);
             OnPropertyChanged(nameof(Products));
         }
         public async Task LoadEntitiesRelated()

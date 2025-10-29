@@ -20,7 +20,7 @@ namespace GreenStock.DataBase
             }
         }
 
-        public async Task<ObservableCollection<T>> GetAllAsync(params Expression<Func<T, object>>[] includes)
+        public async Task<ObservableCollection<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, params Expression<Func<T, object>>[] includes)
         {
             using (var context = new DataBaseContext())
             {
@@ -29,6 +29,10 @@ namespace GreenStock.DataBase
                 foreach (var include in includes)
                     query = query.Include(include);
 
+                if (filter != null)
+                {
+                    query = query.Where(filter);
+                }
                 var list = await query.ToListAsync();
                 return new ObservableCollection<T>(list);
             }

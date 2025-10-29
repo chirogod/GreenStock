@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,8 @@ namespace GreenStock.ViewModels
         private bool _IsBalanzaModalOpen;
         private decimal _BalanzaWeight;
 
+        private string FilterProduct;
+
         public SaleViewModel()
         {
             _ProductRepository = new GenericRepository<ProductModel>();
@@ -55,7 +58,7 @@ namespace GreenStock.ViewModels
             CloseModalCommand = new RelayCommand(CloseModalExecute, CloseModalCanExecute);
 
 
-            Task.Run(async () => await LoadProductsAsync());
+            Task.Run(async () => await LoadProductsAsync(""));
         }
         public SaleModel Sale
         {
@@ -150,6 +153,20 @@ namespace GreenStock.ViewModels
                 {
                     _BalanzaWeight = value;
                     OnPropertyChanged(nameof(BalanzaWeight));
+                }
+            }
+        }
+
+        public string ProductFilter
+        {
+            get => FilterProduct;
+            set
+            {
+                if (FilterProduct != value)
+                {
+                    FilterProduct = value;
+                    OnPropertyChanged(nameof(ProductFilter));
+                    LoadProductsAsync(ProductFilter);
                 }
             }
         }
@@ -281,9 +298,18 @@ namespace GreenStock.ViewModels
             OnPropertyChanged(nameof(SaleItem));
         }
 
-        private async Task LoadProductsAsync()
+        private async Task LoadProductsAsync(string filter)
         {
-            var products = await _ProductRepository.GetAllAsync();
+            Expression<Func<ProductModel, bool>> productPredicate = null;
+
+            if (!string.IsNullOrWhiteSpace(filter))
+            {
+                productPredicate = p =>
+                    p.Name.Contains(filter) ||
+                    p.Code.Contains(filter) ||
+                    p.Plu.Contains(filter);
+            }
+            var products = await _ProductRepository.GetAllAsync(productPredicate);
             Products = new ObservableCollection<ProductModel>(products);
         }
 
