@@ -50,6 +50,24 @@ namespace GreenStock.DataBase
                 .WithMany()
                 .HasForeignKey(p => p.SupplierId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // --- Relaciones de Users y Roles ---
+
+            modelBuilder.Entity<UserRoleModel>()
+                .HasKey(ur => new { ur.UserId, ur.RoleId });    //Definir la clave primaria compuesta (la combinación de UserId y RoleId)
+
+            modelBuilder.Entity<UserRoleModel>()
+                .HasOne(ur => ur.User)                  // UserRoleModel tiene UN User
+                .WithMany(u => u.UserRoles)             // UserModel tiene MUCHOS UserRoles
+                .HasForeignKey(ur => ur.UserId)         // La clave foránea en UserRoleModel es UserId
+                .OnDelete(DeleteBehavior.Cascade);      // Opcional: Si eliminas un Usuario, se eliminan sus UserRoles
+
+            // 3. Configurar la relación UserRoleModel (Muchos) a RoleModel (Uno)
+            modelBuilder.Entity<UserRoleModel>()
+                .HasOne(ur => ur.Role)                  // UserRoleModel tiene UN Role
+                .WithMany(r => r.UserRoles)             // RoleModel tiene MUCHOS UserRoles
+                .HasForeignKey(ur => ur.RoleId)         // La clave foranea en UserRoleModel es RoleId
+                .OnDelete(DeleteBehavior.Cascade);      // Opcional: Si se elimina un Rol, se eliminan los UserRoles asociados
         }
     }
 }

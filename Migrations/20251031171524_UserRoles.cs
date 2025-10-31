@@ -1,0 +1,104 @@
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace GreenStock.Migrations
+{
+    /// <inheritdoc />
+    public partial class UserRoles : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Users_Roles_RoleId",
+                table: "Users");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Users_RoleId",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "RoleId",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "Total",
+                table: "Sales");
+
+            migrationBuilder.DropColumn(
+                name: "Total",
+                table: "SaleItems");
+
+            migrationBuilder.CreateTable(
+                name: "UserRoleModel",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRoleModel", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_UserRoleModel_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRoleModel_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRoleModel_RoleId",
+                table: "UserRoleModel",
+                column: "RoleId");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "UserRoleModel");
+
+            migrationBuilder.AddColumn<int>(
+                name: "RoleId",
+                table: "Users",
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AddColumn<decimal>(
+                name: "Total",
+                table: "Sales",
+                type: "decimal(18,2)",
+                nullable: false,
+                defaultValue: 0m);
+
+            migrationBuilder.AddColumn<decimal>(
+                name: "Total",
+                table: "SaleItems",
+                type: "decimal(18,2)",
+                nullable: false,
+                defaultValue: 0m);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_RoleId",
+                table: "Users",
+                column: "RoleId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Users_Roles_RoleId",
+                table: "Users",
+                column: "RoleId",
+                principalTable: "Roles",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+        }
+    }
+}

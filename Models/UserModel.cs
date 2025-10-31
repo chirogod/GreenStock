@@ -13,8 +13,7 @@ namespace GreenStock.Models
         private string _Phone;
         private string _Username;
         private string _Password;
-        private int _RoleId;
-        public virtual RoleModel Role { get; set; }
+        public virtual ICollection<UserRoleModel> UserRoles { get; set; }
 
         public int Id
         {
@@ -72,16 +71,5 @@ namespace GreenStock.Models
             }
         }
 
-        public int RoleId
-        {
-            get => _RoleId;
-            set
-            {
-                if (value != _RoleId)
-                {
-                    _RoleId = value;
-                }
-            }
-        }
     }
 }

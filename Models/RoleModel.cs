@@ -11,7 +11,8 @@ namespace GreenStock.Models
         private int _Id;
         private string _Name;
         private string _Description;
-        public virtual ICollection<UserModel> Users { get; set; }
+
+        public virtual ICollection<UserRoleModel> UserRoles{ get; set; }
 
         public int Id
         {
@@ -46,5 +47,39 @@ namespace GreenStock.Models
                 }
             }
         }
+    }
+
+    public class UserRoleModel
+    {
+        private int _UserId;
+        private int _RoleId;
+
+        public virtual UserModel User { get; set; }
+        public virtual RoleModel Role { get; set; }
+
+        public int UserId
+        {
+            get => _UserId;
+            set
+            {
+                if (value != _UserId)
+                {
+                    _UserId = value;
+                }
+            }
+        }
+
+        public int RoleId
+        {
+            get => _RoleId;
+            set
+            {
+                if (value != _RoleId)
+                {
+                    _RoleId = value;
+                }
+            }
+        }
+
     }
 }
