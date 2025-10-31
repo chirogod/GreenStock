@@ -3,10 +3,352 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GreenStock.Views"
+             xmlns:local="clr-namespace:GreenStock.Views" 
+             xmlns:viewmodels="clr-namespace:GreenStock.ViewModels" xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="blue">
-            
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <UserControl.Resources>
+        <viewmodels:DashboardViewModel x:Key="dashboard"/>
+    </UserControl.Resources>
+    
+    <Grid Background="#fff">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical" Grid.Column="0">
+                <StackPanel Orientation="Horizontal">
+                    <fa:IconImage Margin="0, 0, 8, 0" Icon="Home" Width="38" Height="38"/>
+                    <TextBlock Text="Dashboard" FontSize="24" FontWeight="Bold"/>
+                </StackPanel>
+                <TextBlock Text="Resumen general de la dietetica" FontSize="14" Foreground="Gray"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0"
+                    CornerRadius="8"
+                    Background="White"
+                    Padding="15"
+                    Margin="50 5"
+                    BorderThickness="1"
+                    BorderBrush="gray">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Caja del Día" FontSize="16" FontWeight="SemiBold" Grid.Column="0"/>
+                        <fa:IconImage Icon="DollarSign" Width="20" Height="20" Foreground="Gray" Grid.Column="1"/>
+                    </Grid>
+
+                    <TextBlock Text="$45,670" 
+                       FontSize="30" FontWeight="Bold" Margin="0, 10, 0, 0"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                        <Border Background="#108000" CornerRadius="4" Padding="5, 2">
+                            <TextBlock Text="+12%" Foreground="White" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                        <TextBlock Text="vs. ayer" FontSize="12" Margin="5, 0, 0, 0" VerticalAlignment="Center" Foreground="Gray"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1"
+                    CornerRadius="8"
+                    Background="White"
+                    Padding="15"
+                    Margin="50 5"
+                    BorderThickness="1"
+                    BorderBrush="gray">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Ventas del Día" FontSize="16" FontWeight="SemiBold" Grid.Column="0"/>
+                        <fa:IconImage Icon="ShoppingCart" Width="20" Height="20" Foreground="Gray" Grid.Column="1"/>
+                    </Grid>
+
+                    <TextBlock Text="29" 
+                               FontSize="30" FontWeight="Bold" Margin="0, 10, 0, 0"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                        <Border Background="#108000" CornerRadius="4" Padding="5, 2">
+                            <TextBlock Text="+7" Foreground="White" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                        <TextBlock Text="vs. ayer" FontSize="12" Margin="5, 0, 0, 0" VerticalAlignment="Center" Foreground="Gray"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="2"
+                    CornerRadius="8"
+                    Background="White"
+                    Padding="15"
+                    Margin="50 5"
+                    BorderThickness="1"
+                    BorderBrush="gray">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Productos en Stock" FontSize="16" FontWeight="SemiBold" Grid.Column="0"/>
+                        <fa:IconImage Icon="Cube" Width="20" Height="20" Foreground="Gray" Grid.Column="1"/>
+                    </Grid>
+
+                    <TextBlock Text="2" 
+                       FontSize="30" FontWeight="Bold" Margin="0, 10, 0, 0"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                        <Border Background="#CC0000" CornerRadius="4" Padding="5, 2">
+                            <TextBlock Text="-3" Foreground="White" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                        <TextBlock Text="vs. ayer" FontSize="12" Margin="5, 0, 0, 0" VerticalAlignment="Center" Foreground="Gray"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="3"
+                    CornerRadius="8"
+                    Background="White"
+                    Padding="15"
+                    Margin="50 5"
+                    BorderThickness="1"
+                    BorderBrush="gray">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Alertas de Stock" FontSize="16" FontWeight="SemiBold" Grid.Column="0"/>
+                        <fa:IconImage Icon="ExclamationTriangle" Width="20" Height="20" Foreground="Gray" Grid.Column="1"/>
+                    </Grid>
+
+                    <TextBlock Text="{Binding Source={StaticResource dashboard}, Path=StockAlerts, StringFormat='{}{0}'}" 
+                       FontSize="30" FontWeight="Bold" Margin="0, 10, 0, 0"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 0">
+                        <Border Background="#CC0000" CornerRadius="4" Padding="5, 2">
+                            <TextBlock Text="+4" Foreground="White" FontWeight="SemiBold" FontSize="12"/>
+                        </Border>
+                        <TextBlock Text="vs. ayer" FontSize="12" Margin="5, 0, 0, 0" VerticalAlignment="Center" Foreground="Gray"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" CornerRadius="8"
+                    Background="White"
+                    Padding="15"
+                    Margin="10"
+                    Width="700"
+                    BorderThickness="1"
+                    BorderBrush="gray">
+
+                <StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 0, 0, 15">
+                        <fa:IconImage Icon="ShoppingCart" Width="20" Height="20" Foreground="Black" Margin="0, 0, 8, 0"/>
+                        <TextBlock Text="Ventas Recientes" FontSize="18" FontWeight="SemiBold"/>
+                    </StackPanel>
+
+                    <StackPanel>
+
+                        <Grid Margin="0, 5, 0, 5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Venta Nro 189 - Consumidor final" FontSize="14" FontWeight="SemiBold"/>
+                                <TextBlock Text="9:30am | 5 items" FontSize="12" Foreground="Gray" Margin="0, 2, 0, 0"/>
+                            </StackPanel>
+
+                            <TextBlock Text="$18,450" Grid.Column="1" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <Separator Margin="0, 5, 0, 5" Background="gray" Height=".5"/>
+
+                        <Grid Margin="0, 5, 0, 5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Venta Nro 188 - Rafaela Arce" FontSize="14" FontWeight="SemiBold"/>
+                                <TextBlock Text="10:00am | 2 items" FontSize="12" Foreground="Gray" Margin="0, 2, 0, 0"/>
+                            </StackPanel>
+
+                            <TextBlock Text="$12,750" Grid.Column="1" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+
+                        </Grid>
+                        
+                        <Separator Margin="0, 5, 0, 5" Background="gray" Height=".5"/>
+
+                        <Grid Margin="0, 5, 0, 5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Venta Nro 187 - Consumidor final" FontSize="14" FontWeight="SemiBold"/>
+                                <TextBlock Text="10:30am | 1 items" FontSize="12" Foreground="Gray" Margin="0, 2, 0, 0"/>
+                            </StackPanel>
+
+                            <TextBlock Text="$4,250" Grid.Column="1" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+
+                        </Grid>
+
+                        <Separator Margin="0, 5, 0, 5" Background="gray" Height=".5"/>
+
+                        <Grid Margin="0, 5, 0, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Venta Nro 186 - Augusto Rolandelli" FontSize="14" FontWeight="SemiBold"/>
+                                <TextBlock Text="11:30am | 10 items" FontSize="12" Foreground="Gray" Margin="0, 2, 0, 0"/>
+                            </StackPanel>
+
+                            <TextBlock Text="$107,600" Grid.Column="1" FontSize="14" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        </Grid>
+
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="1" CornerRadius="8"
+                    Background="White"
+                    Padding="15"
+                    Margin="10"
+                    Width="700"
+                    BorderThickness="1"
+                    BorderBrush="gray">
+
+                <StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 0, 0, 15">
+                        <fa:IconImage Icon="Warning" Width="20" Height="20" Foreground="Orange" Margin="0, 0, 8, 0"/>
+                        <TextBlock Text="Alertas de Stock Bajo" FontSize="18" FontWeight="SemiBold"/>
+                    </StackPanel>
+
+                    <StackPanel>
+
+                        <Grid Margin="0, 5, 0, 5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Azucar mascabo" FontSize="14" FontWeight="SemiBold"/>
+                                <TextBlock Text="Stock: 250g / Minimo: 500g" FontSize="12" Foreground="Gray" Margin="0, 2, 0, 0"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <Border Background="#CC0000" CornerRadius="4" Padding="5, 2">
+                                    <TextBlock Text="Critico" Foreground="White" FontWeight="SemiBold" FontSize="12"/>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+
+                        <Separator Margin="0, 5, 0, 5" Background="gray" Height=".5"/>
+
+                        <Grid Margin="0, 5, 0, 5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Chocolate 70%" FontSize="14" FontWeight="SemiBold"/>
+                                <TextBlock Text="Stock: 5 / Minimo: 5" FontSize="12" Foreground="Gray" Margin="0, 2, 0, 0"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <Border Background="Gray" CornerRadius="4" Padding="5, 2">
+                                    <TextBlock Text="Bajo" Foreground="White" FontWeight="SemiBold" FontSize="12"/>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+
+                        <Separator Margin="0, 5, 0, 5" Background="gray" Height=".5"/>
+
+                        <Grid Margin="0, 5, 0, 5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Azucar Impalpable" FontSize="14" FontWeight="SemiBold"/>
+                                <TextBlock Text="Stock: 200g / Minimo: 500g" FontSize="12" Foreground="Gray" Margin="0, 2, 0, 0"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <Border Background="#CC0000" CornerRadius="4" Padding="5, 2">
+                                    <TextBlock Text="Critico" Foreground="White" FontWeight="SemiBold" FontSize="12"/>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+
+                        <Separator Margin="0, 5, 0, 5" Background="gray" Height=".5"/>
+
+                        <Grid Margin="0, 5, 0, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="Granola" FontSize="14" FontWeight="SemiBold"/>
+                                <TextBlock Text="Stock: 1.5kg / Minimo: 1kg" FontSize="12" Foreground="Gray" Margin="0, 2, 0, 0"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <Border Background="Gray" CornerRadius="4" Padding="5, 2">
+                                    <TextBlock Text="Bajo" Foreground="White" FontWeight="SemiBold" FontSize="12"/>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>
